@@ -1,4 +1,4 @@
-"""pyagi - A simple, pythonic Asterisk AGI library."""
+"""An Asterisk AGI library for humans."""
 
 
 import sys, pprint, re
