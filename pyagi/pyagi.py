@@ -14,7 +14,7 @@ re_code = re.compile(r'(^\d*)\s*(.*)')
 re_kv = re.compile(r'(?P<key>\w+)=(?P<value>[^\s]+)\s*(?:\((?P<data>.*)\))*')
 
 
-class AGI:
+class AGI(object):
     """
     This class encapsulates communication between Asterisk an a python script.
     It handles encoding commands to Asterisk and parsing responses from
