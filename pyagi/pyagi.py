@@ -1,9 +1,9 @@
 """An Asterisk AGI library for humans."""
 
 
-import sys, pprint, re
+import pprint, re, signal, sys
 from types import ListType
-import signal
+
 from exceptions import *
 
 
