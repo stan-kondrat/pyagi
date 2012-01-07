@@ -56,7 +56,7 @@ class AGI(object):
 
             # Only store the variable and value if the variable name exists. If
             # it is empty, something weird must have happened, so do nothing.
-            if key != '':
+            if key:
                 self.env[key] = data
 
     def _quote(self, string):
