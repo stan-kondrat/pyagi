@@ -43,10 +43,11 @@ class AGI(object):
         for more information.
         """
         while True:
+
             line = sys.stdin.readline().strip()
-            if line == '':
-                #blank line signals end
+            if not line:
                 break
+
             key,data = line.split(':')[0], ':'.join(line.split(':')[1:])
             key = key.strip()
             data = data.strip()
