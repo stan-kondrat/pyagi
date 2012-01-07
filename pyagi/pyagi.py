@@ -28,9 +28,6 @@ class AGI(object):
     def __init__(self):
         self._got_sighup = False
         signal.signal(signal.SIGHUP, self._handle_sighup)  # handle SIGHUP
-        sys.stderr.write('ARGS: ')
-        sys.stderr.write(str(sys.argv))
-        sys.stderr.write('\n')
         self.env = {}
         self._get_agi_env()
 
