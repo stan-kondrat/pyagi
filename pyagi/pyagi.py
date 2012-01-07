@@ -20,7 +20,6 @@ class AGI(object):
     It handles encoding commands to Asterisk and parsing responses from
     Asterisk.
     """
-
     def __init__(self):
         self._got_sighup = False
         signal.signal(signal.SIGHUP, self._handle_sighup)  # handle SIGHUP
@@ -581,6 +580,7 @@ class AGI(object):
         Does nothing
         """
         self.execute('NOOP')
+
 
 if __name__=='__main__':
     agi = AGI()
