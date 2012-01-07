@@ -15,10 +15,10 @@ re_kv = re.compile(r'(?P<key>\w+)=(?P<value>[^\s]+)\s*(?:\((?P<data>.*)\))*')
 
 
 class AGI(object):
-    """
-    This class encapsulates communication between Asterisk an a python script.
-    It handles encoding commands to Asterisk and parsing responses from
-    Asterisk.
+    """An Asterisk AGI protocol wrapper.
+
+    An instance of this class handles command processing and communication
+    between Asterisk and python.
     """
     def __init__(self):
         self._got_sighup = False
