@@ -35,6 +35,10 @@ class AGI(object):
         """Read in all variables passed to us by Asterisk through STDIN, storing
         these variables in our ``env`` class attribute.
 
+        This works by reading lines from STDIN until we receive a blank line,
+        indicating that Asterisk has nothing left to pass us. Each line we read
+        is parsed, and stored in a class dictionary, ``env``, for later usage.
+
         See: http://www.voip-info.org/wiki/view/Asterisk+AGI#AGIExecutionEnvironment
         for more information.
         """
