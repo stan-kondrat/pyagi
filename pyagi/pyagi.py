@@ -48,10 +48,15 @@ class AGI(object):
             if not line:
                 break
 
-            key,data = line.split(':')[0], ':'.join(line.split(':')[1:])
+            # Asterisk passes variables to us in the format:
+            #   name: value
+            key, data = line.split(':')[0], ':'.join(line.split(':')[1:])
             key = key.strip()
             data = data.strip()
-            if key <> '':
+
+            # Only store the variable and value if the variable name exists. If
+            # it is empty, something weird must have happened, so do nothing.
+            if key != '':
                 self.env[key] = data
 
     def _quote(self, string):
