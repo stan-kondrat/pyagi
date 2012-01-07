@@ -34,9 +34,6 @@ class AGI(object):
     def _get_agi_env(self):
         while 1:
             line = sys.stdin.readline().strip()
-            sys.stderr.write('ENV LINE: ')
-            sys.stderr.write(line)
-            sys.stderr.write('\n')
             if line == '':
                 #blank line signals end
                 break
@@ -45,9 +42,6 @@ class AGI(object):
             data = data.strip()
             if key <> '':
                 self.env[key] = data
-        sys.stderr.write('class AGI: self.env = ')
-        sys.stderr.write(pprint.pformat(self.env))
-        sys.stderr.write('\n')
 
     def _quote(self, string):
         return ''.join(['"', str(string), '"'])
@@ -81,7 +75,6 @@ class AGI(object):
         command = command.strip()
         if command[-1] != '\n':
             command += '\n'
-        sys.stderr.write('    COMMAND: %s' % command)
         sys.stdout.write(command)
         sys.stdout.flush()
 
@@ -90,7 +83,6 @@ class AGI(object):
         code = 0
         result = {'result':('','')}
         line = stdin.readline().strip()
-        sys.stderr.write('    RESULT_LINE: %s\n' % line)
         m = re_code.search(line)
         if m:
             code, response = m.groups()
@@ -107,7 +99,6 @@ class AGI(object):
                 if key == 'result' and value == '-1':
                     raise AGIAppError("Error executing application, or hangup")
 
-            sys.stderr.write('    RESULT_DICT: %s\n' % pprint.pformat(result))
             return result
         elif code == 510:
             raise AGIInvalidCommand(response)
