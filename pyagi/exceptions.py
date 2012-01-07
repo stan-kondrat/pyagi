@@ -1,4 +1,8 @@
+"""pyagi exceptions."""
+
+
 class AGIException(Exception): pass
+
 class AGIError(AGIException): pass
 
 class AGIUnknownError(AGIError): pass
