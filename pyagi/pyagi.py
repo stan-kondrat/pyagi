@@ -38,7 +38,7 @@ class AGI(object):
         See: http://www.voip-info.org/wiki/view/Asterisk+AGI#AGIExecutionEnvironment
         for more information.
         """
-        while 1:
+        while True:
             line = sys.stdin.readline().strip()
             if line == '':
                 #blank line signals end
