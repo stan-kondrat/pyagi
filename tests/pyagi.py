@@ -5,4 +5,9 @@ from unittest import TestCase
 
 
 class TestAGI(TestCase):
-    pass
+
+    def setUp():
+        pass
+
+    def tearDown():
+        pass
