@@ -7,9 +7,6 @@ from types import ListType
 from exceptions import *
 
 
-DEFAULT_TIMEOUT = 2000 # 2sec timeout used as default for functions that take timeouts
-DEFAULT_RECORD  = 20000 # 20sec record time
-
 re_code = re.compile(r'(^\d*)\s*(.*)')
 re_kv = re.compile(r'(?P<key>\w+)=(?P<value>[^\s]+)\s*(?:\((?P<data>.*)\))*')
 
@@ -19,7 +16,15 @@ class AGI(object):
 
     An instance of this class handles command processing and communication
     between Asterisk and python.
+
+    :attr int DEFAULT_TIMEOUT: The default timeout (in ms) to use for methods
+        that take a timeout argument.
+    :attr int DEFAULT_RECORD: The default allowed recording time (in ms) to use
+        for methods that take a record time argument.
     """
+    DEFAULT_TIMEOUT = 2000
+    DEFAULT_RECORD = 20000
+
     def __init__(self):
         self._got_sighup = False
         signal.signal(signal.SIGHUP, self._handle_sighup)  # handle SIGHUP
