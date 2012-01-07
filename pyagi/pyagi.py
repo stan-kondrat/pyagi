@@ -32,6 +32,12 @@ class AGI(object):
         self._get_agi_env()
 
     def _get_agi_env(self):
+        """Read in all variables passed to us by Asterisk through STDIN, storing
+        these variables in our ``env`` class attribute.
+
+        See: http://www.voip-info.org/wiki/view/Asterisk+AGI#AGIExecutionEnvironment
+        for more information.
+        """
         while 1:
             line = sys.stdin.readline().strip()
             if line == '':
