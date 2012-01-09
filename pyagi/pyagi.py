@@ -571,9 +571,13 @@ class AGI(object):
             raise AGIDBError('Unable to put vaule in databale: family=%s, key=%s, value=%s' % (family, key, value))
 
     def database_del(self, family, key):
-        """agi.database_del(family, key) --> None
-        Deletes an entry in the Asterisk database for a
-        given family and key.
+        """Deletes an entry in the Asterisk database for a given family and
+        key.
+
+        See: http://www.voip-info.org/wiki/view/database+del
+
+        :rtype: int
+        :returns: 1 if successful, 0 otherwise.
         """
         result = self.execute('DATABASE DEL', self._quote(family), self._quote(key))
         res, value = result['result']
