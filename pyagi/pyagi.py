@@ -597,8 +597,10 @@ class AGI(object):
     def get_variable(self, name):
         """Get a channel variable.
 
-        This function returns the value of the indicated channel variable.  If
-        the variable is not set, an empty string is returned.
+        See: http://www.voip-info.org/wiki/view/get+variable
+
+        :rtype: str
+        :returns: The variable, or an empty string if the variable isn't set.
         """
         try:
            result = self.execute('GET VARIABLE', self._quote(name))
