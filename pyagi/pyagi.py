@@ -373,6 +373,17 @@ class AGI(object):
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
 
+    def receive_text(self):
+        """Receives a string of text on a channel. Most channels do not support
+        the reception of text.
+
+        See: http://www.voip-info.org/wiki/view/receive+text
+
+        :rtype: str
+        :returns: The string received, or an empty string on failure.
+        """
+        pass
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
