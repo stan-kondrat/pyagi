@@ -493,10 +493,15 @@ class AGI(object):
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
 
     def say_digits(self, digits, escape_digits=''):
-        """agi.say_digits(digits, escape_digits='') --> digit
-        Say a given digit string, returning early if any of the given DTMF digits
-        are received on the channel.
-        Throws AGIError on channel failure
+        """Say a given digit string, returning early if any of the given DTMF
+        digits are received on the channel.
+
+        See: http://www.voip-info.org/wiki/view/say+digits
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed or -1 on
+            error/hangup.
         """
         digits = self._process_digit_list(digits)
         escape_digits = self._process_digit_list(escape_digits)
