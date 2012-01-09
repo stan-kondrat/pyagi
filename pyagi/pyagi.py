@@ -201,6 +201,26 @@ class AGI(object):
         if res == '0':
             raise AGIDBError('Unable to delete tree from database: family=%s, key=%s' % (family, key))
 
+    def database_get(self, family, key):
+        """Retrieves an entry in the Asterisk database for a given family and
+        key.
+
+        See: http://www.voip-info.org/wiki/view/database+get
+
+        :rtype: str
+        :returns: The database entry (if one exists), or an empty string.
+        """
+        family = '"%s"' % family
+        key = '"%s"' % key
+        result = self.execute('DATABASE GET', self._quote(family), self._quote(key))
+        res, value = result['result']
+        if res == '0':
+            raise AGIDBError('Key not found in database: family=%s, key=%s' % (family, key))
+        elif res == '1':
+            return value
+        else:
+            raise AGIError('Unknown exception for : family=%s, key=%s, result=%s' % (family, key, pprint.pformat(result)))
+
     def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
         """agi.wait_for_digit(timeout=DEFAULT_TIMEOUT) --> digit
         Waits for up to 'timeout' milliseconds for a channel to receive a DTMF
@@ -571,26 +591,6 @@ class AGI(object):
         <level> is the the verbose level (1-4)
         """
         self.execute('VERBOSE', self._quote(message), level)
-
-    def database_get(self, family, key):
-        """Retrieves an entry in the Asterisk database for a given family and
-        key.
-
-        See: http://www.voip-info.org/wiki/view/database+get
-
-        :rtype: str
-        :returns: The database entry (if one exists), or an empty string.
-        """
-        family = '"%s"' % family
-        key = '"%s"' % key
-        result = self.execute('DATABASE GET', self._quote(family), self._quote(key))
-        res, value = result['result']
-        if res == '0':
-            raise AGIDBError('Key not found in database: family=%s, key=%s' % (family, key))
-        elif res == '1':
-            return value
-        else:
-            raise AGIError('Unknown exception for : family=%s, key=%s, result=%s' % (family, key, pprint.pformat(result)))
 
     def database_put(self, family, key, value):
         """agi.database_put(family, key, value) --> None
