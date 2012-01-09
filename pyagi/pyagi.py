@@ -468,8 +468,12 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def get_data(self, filename, timeout=DEFAULT_TIMEOUT, max_digits=255):
-        """agi.get_data(filename, timeout=DEFAULT_TIMEOUT, max_digits=255) --> digits
-        Stream the given file and receive dialed digits
+        """Stream the given file, and receive DTMF data.
+
+        See: http://www.voip-info.org/wiki/view/get+data
+
+        :rtype: str
+        :returns: Digits received from the channel at the other end.
         """
         result = self.execute('GET DATA', filename, timeout, max_digits)
         res, value = result['result']
