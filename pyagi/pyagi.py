@@ -600,13 +600,15 @@ class AGI(object):
         self.set_extension(extension)
         self.set_priority(priority)
 
-    def record_file(self, filename, format='gsm', escape_digits='#', timeout=DEFAULT_RECORD, offset=0, beep='beep'):
-        """agi.record_file(filename, format, escape_digits, timeout=DEFAULT_TIMEOUT, offset=0, beep='beep') --> None
-        Record to a file until a given dtmf digit in the sequence is received
-        The format will specify what kind of file will be recorded.  The timeout
-        is the maximum record time in milliseconds, or -1 for no timeout. Offset
-        samples is optional, and if provided will seek to the offset without
-        exceeding the end of the file
+    def record_file(self, filename, format='gsm', escape_digits='#',
+            timeout=DEFAULT_RECORD, offset=0, beep='beep'):
+        """Record to a file until a given dtmf digit in the sequence is
+        received.
+
+        See: http://www.voip-info.org/wiki/view/record+file
+
+        :rtype: int
+        :returns: -1 on hangup or error.
         """
         escape_digits = self._process_digit_list(escape_digits)
         res = self.execute('RECORD FILE', self._quote(filename), format, escape_digits, timeout, offset, beep)['result'][0]
