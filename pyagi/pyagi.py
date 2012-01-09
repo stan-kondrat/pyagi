@@ -545,10 +545,15 @@ class AGI(object):
         self.execute('HANGUP', channel)
 
     def appexec(self, application, options=''):
-        """agi.appexec(application, options='')
-        Executes <application> with given <options>.
-        Returns whatever the application returns, or -2 on failure to find
-        application
+        """Executes application with given options.
+
+        See: http://www.voip-info.org/wiki/view/exec
+
+        :rtype: int
+        :returns: Whatever the application returns, or -2 on failure to find
+            application.
+
+        TODO: Rename this application to exec, to comply with AGI standard.
         """
         result = self.execute('EXEC', application, self._quote(options))
         res = result['result'][0]
