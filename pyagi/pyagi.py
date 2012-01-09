@@ -537,10 +537,15 @@ class AGI(object):
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
 
     def say_phonetic(self, characters, escape_digits=''):
-        """agi.say_phonetic(string, escape_digits='') --> digit
-        Phonetically say a given character string, returning early if any of
-        the given DTMF digits are received on the channel.
-        Throws AGIError on channel failure
+        """Say a given character string with phonetics, returning early if any
+        of the given DTMF digits are received on the channel.
+
+        See: http://www.voip-info.org/wiki/view/say+phonetic
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit pressed, the ASCII
+            numerical value of the digit if one was pressed, or -1 on
+            error/hangup.
         """
         characters = self._process_digit_list(characters)
         escape_digits = self._process_digit_list(escape_digits)
