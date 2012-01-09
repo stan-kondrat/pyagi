@@ -384,6 +384,23 @@ class AGI(object):
         """
         pass
 
+    def record_file(self, filename, format='gsm', escape_digits='#',
+            timeout=DEFAULT_RECORD, offset=0, beep='beep'):
+        """Record to a file until a given dtmf digit in the sequence is
+        received.
+
+        See: http://www.voip-info.org/wiki/view/record+file
+
+        :rtype: int
+        :returns: -1 on hangup or error.
+        """
+        escape_digits = self._process_digit_list(escape_digits)
+        res = self.execute('RECORD FILE', self._quote(filename), format, escape_digits, timeout, offset, beep)['result'][0]
+        try:
+            return chr(int(res))
+        except:
+            raise AGIError('Unable to convert result to digit: %s' % res)
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -599,23 +616,6 @@ class AGI(object):
         self.set_context(context)
         self.set_extension(extension)
         self.set_priority(priority)
-
-    def record_file(self, filename, format='gsm', escape_digits='#',
-            timeout=DEFAULT_RECORD, offset=0, beep='beep'):
-        """Record to a file until a given dtmf digit in the sequence is
-        received.
-
-        See: http://www.voip-info.org/wiki/view/record+file
-
-        :rtype: int
-        :returns: -1 on hangup or error.
-        """
-        escape_digits = self._process_digit_list(escape_digits)
-        res = self.execute('RECORD FILE', self._quote(filename), format, escape_digits, timeout, offset, beep)['result'][0]
-        try:
-            return chr(int(res))
-        except:
-            raise AGIError('Unable to convert result to digit: %s' % res)
 
     def set_autohangup(self, secs):
         """agi.set_autohangup(secs) --> None
