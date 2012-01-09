@@ -187,6 +187,20 @@ class AGI(object):
         if res == '0':
             raise AGIDBError('Unable to delete from database: family=%s, key=%s' % (family, key))
 
+    def database_deltree(self, family, key=''):
+        """Deletes a family or specific keytree within a family in the Asterisk
+        database.
+
+        See: http://www.voip-info.org/wiki/view/database+deltree
+
+        :rtype: int
+        :returns: 1 if successful, 0 otherwise.
+        """
+        result = self.execute('DATABASE DELTREE', self._quote(family), self._quote(key))
+        res, value = result['result']
+        if res == '0':
+            raise AGIDBError('Unable to delete tree from database: family=%s, key=%s' % (family, key))
+
     def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
         """agi.wait_for_digit(timeout=DEFAULT_TIMEOUT) --> digit
         Waits for up to 'timeout' milliseconds for a channel to receive a DTMF
@@ -585,20 +599,6 @@ class AGI(object):
         res, value = result['result']
         if res == '0':
             raise AGIDBError('Unable to put vaule in databale: family=%s, key=%s, value=%s' % (family, key, value))
-
-    def database_deltree(self, family, key=''):
-        """Deletes a family or specific keytree within a family in the Asterisk
-        database.
-
-        See: http://www.voip-info.org/wiki/view/database+deltree
-
-        :rtype: int
-        :returns: 1 if successful, 0 otherwise.
-        """
-        result = self.execute('DATABASE DELTREE', self._quote(family), self._quote(key))
-        res, value = result['result']
-        if res == '0':
-            raise AGIDBError('Unable to delete tree from database: family=%s, key=%s' % (family, key))
 
     def noop(self):
         """agi.noop() --> None
