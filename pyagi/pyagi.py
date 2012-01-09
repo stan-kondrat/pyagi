@@ -321,6 +321,22 @@ class AGI(object):
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
 
+    def get_variable(self, name):
+        """Get a channel variable.
+
+        See: http://www.voip-info.org/wiki/view/get+variable
+
+        :rtype: str
+        :returns: The variable, or an empty string if the variable isn't set.
+        """
+        try:
+           result = self.execute('GET VARIABLE', self._quote(name))
+        except AGIResultHangup:
+           result = {'result': ('1', 'hangup')}
+
+        res, value = result['result']
+        return value
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -593,22 +609,6 @@ class AGI(object):
         """Set a channel variable.
         """
         self.execute('SET VARIABLE', self._quote(name), self._quote(value))
-
-    def get_variable(self, name):
-        """Get a channel variable.
-
-        See: http://www.voip-info.org/wiki/view/get+variable
-
-        :rtype: str
-        :returns: The variable, or an empty string if the variable isn't set.
-        """
-        try:
-           result = self.execute('GET VARIABLE', self._quote(name))
-        except AGIResultHangup:
-           result = {'result': ('1', 'hangup')}
-
-        res, value = result['result']
-        return value
 
     def verbose(self, message, level=1):
         """agi.verbose(message='', level=1) --> None
