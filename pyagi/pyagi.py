@@ -347,14 +347,6 @@ class AGI(object):
         """Does nothing."""
         self.execute('NOOP')
 
-    def send_text(self, text=''):
-        """agi.send_text(text='') --> None
-        Sends the given text on a channel.  Most channels do not support the
-        transmission of text.
-        Throws AGIError on error/hangup
-        """
-        self.execute('SEND TEXT', self._quote(text))['result'][0]
-
     def receive_char(self, timeout=DEFAULT_TIMEOUT):
         """Receives a character of text on a channel. Most channels do not
         support the reception of text.
@@ -375,6 +367,14 @@ class AGI(object):
                 return chr(int(res))
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
+
+    def send_text(self, text=''):
+        """agi.send_text(text='') --> None
+        Sends the given text on a channel.  Most channels do not support the
+        transmission of text.
+        Throws AGIError on error/hangup
+        """
+        self.execute('SEND TEXT', self._quote(text))['result'][0]
 
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
