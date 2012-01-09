@@ -133,9 +133,12 @@ class AGI(object):
         return self._quote(digits)
 
     def answer(self):
-        """Answer channel.
+        """Answers channel if not already in answer state.
 
         See: http://www.voip-info.org/wiki/view/answer
+
+        :rtype: int
+        :returns: -1 on channel failure, or 0 if successful.
         """
         self.execute('ANSWER')['result'][0]
 
