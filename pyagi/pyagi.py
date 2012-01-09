@@ -133,8 +133,9 @@ class AGI(object):
         return self._quote(digits)
 
     def answer(self):
-        """agi.answer() --> None
-        Answer channel if not already in answer state.
+        """Answers channel if not already in answer state.
+
+        See: http://www.voip-info.org/wiki/view/answer
         """
         self.execute('ANSWER')['result'][0]
 
