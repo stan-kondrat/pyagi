@@ -1,7 +1,8 @@
 """An Asterisk AGI library for humans."""
 
 
-import pprint, re, signal, sys
+import pprint, re, sys
+from signal import signal, SIGHUP
 from types import ListType
 
 from exceptions import *
@@ -27,7 +28,7 @@ class AGI(object):
 
     def __init__(self):
         self._got_sighup = False
-        signal.signal(signal.SIGHUP, self._handle_sighup)  # handle SIGHUP
+        signal(SIGHUP, self._handle_sighup)  # handle SIGHUP
         self.env = {}
         self._get_agi_env()
 
