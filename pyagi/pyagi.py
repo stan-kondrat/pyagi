@@ -279,6 +279,28 @@ class AGI(object):
         res, value = result['result']
         return res
 
+    def get_full_variable(self, name, channel = None):
+        """Retrieve a channel variable. Understands complex variable names and
+        builtin variables, unlike ``get_variable``.
+
+        See: http://www.voip-info.org/wiki/view/get+full+variable
+
+        :rtype: str
+        :returns: The variable, or an empty string if the variable doesn't
+            exist.
+        """
+        try:
+           if channel:
+              result = self.execute('GET FULL VARIABLE', self._quote(name), self._quote(channel))
+           else:
+              result = self.execute('GET FULL VARIABLE', self._quote(name))
+
+        except AGIResultHangup:
+           result = {'result': ('1', 'hangup')}
+
+        res, value = result['result']
+        return value
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -584,28 +606,6 @@ class AGI(object):
         """
         try:
            result = self.execute('GET VARIABLE', self._quote(name))
-        except AGIResultHangup:
-           result = {'result': ('1', 'hangup')}
-
-        res, value = result['result']
-        return value
-
-    def get_full_variable(self, name, channel = None):
-        """Retrieve a channel variable. Understands complex variable names and
-        builtin variables, unlike ``get_variable``.
-
-        See: http://www.voip-info.org/wiki/view/get+full+variable
-
-        :rtype: str
-        :returns: The variable, or an empty string if the variable doesn't
-            exist.
-        """
-        try:
-           if channel:
-              result = self.execute('GET FULL VARIABLE', self._quote(name), self._quote(channel))
-           else:
-              result = self.execute('GET FULL VARIABLE', self._quote(name))
-
         except AGIResultHangup:
            result = {'result': ('1', 'hangup')}
 
