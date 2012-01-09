@@ -502,13 +502,9 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def get_option(self, filename, escape_digits='', timeout=0):
-        """agi.get_option(filename, escape_digits='', timeout=0) --> digit
-        Send the given file, allowing playback to be interrupted by the given
-        digits, if any.  escape_digits is a string '12345' or a list  of
-        ints [1,2,3,4,5] or strings ['1','2','3'] or mixed [1,'2',3,'4']
-        Returns  digit if one was pressed.
-        Throws AGIError if the channel was disconnected.  Remember, the file
-        extension must not be included in the filename.
+        """Behaves similar to STREAM FILE but used with a timeout option.
+
+        See: http://www.voip-info.org/wiki/view/get+option
         """
         escape_digits = self._process_digit_list(escape_digits)
         if timeout:
