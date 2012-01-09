@@ -337,6 +337,12 @@ class AGI(object):
         res, value = result['result']
         return value
 
+    def hangup(self, channel=''):
+        """Hangs up the specified channel. If no channel name is given, hangs
+        up the current channel.
+        """
+        self.execute('HANGUP', channel)
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -591,12 +597,6 @@ class AGI(object):
         0 will cause the autohangup feature to be disabled on this channel.
         """
         self.execute('SET AUTOHANGUP', secs)
-
-    def hangup(self, channel=''):
-        """Hangs up the specified channel. If no channel name is given, hangs
-        up the current channel.
-        """
-        self.execute('HANGUP', channel)
 
     def set_callerid(self, number):
         """agi.set_callerid(number) --> None
