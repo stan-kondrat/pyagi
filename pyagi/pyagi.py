@@ -152,6 +152,8 @@ class AGI(object):
         """Returns the status of the specified channel. If no channel name is
         given then returns the status of the current channel.
 
+        See: http://www.voip-info.org/wiki/view/channel+status
+
         :rtype: int
         :returns: 0 - Channel is down and available.
             1 - Channel is down, but reserved.
