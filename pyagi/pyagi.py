@@ -139,6 +139,12 @@ class AGI(object):
         """
         self.execute('ANSWER')['result'][0]
 
+    def asyncagi_break(self):
+        """Interrupts expected flow of Async AGI commands and returns control
+        to previous source (typically, the PBX dialplan).
+        """
+        pass
+
     def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
         """agi.wait_for_digit(timeout=DEFAULT_TIMEOUT) --> digit
         Waits for up to 'timeout' milliseconds for a channel to receive a DTMF
