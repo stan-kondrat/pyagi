@@ -221,6 +221,20 @@ class AGI(object):
         else:
             raise AGIError('Unknown exception for : family=%s, key=%s, result=%s' % (family, key, pprint.pformat(result)))
 
+    def database_put(self, family, key, value):
+        """Adds or updates an entry in the Asterisk database for a given
+        family, key, and value.
+
+        See: http://www.voip-info.org/wiki/view/database+put
+
+        :rtype: int
+        :returns: 1 if successful, 0 otherwise.
+        """
+        result = self.execute('DATABASE PUT', self._quote(family), self._quote(key), self._quote(value))
+        res, value = result['result']
+        if res == '0':
+            raise AGIDBError('Unable to put vaule in databale: family=%s, key=%s, value=%s' % (family, key, value))
+
     def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
         """agi.wait_for_digit(timeout=DEFAULT_TIMEOUT) --> digit
         Waits for up to 'timeout' milliseconds for a channel to receive a DTMF
@@ -591,20 +605,6 @@ class AGI(object):
         <level> is the the verbose level (1-4)
         """
         self.execute('VERBOSE', self._quote(message), level)
-
-    def database_put(self, family, key, value):
-        """Adds or updates an entry in the Asterisk database for a given
-        family, key, and value.
-
-        See: http://www.voip-info.org/wiki/view/database+put
-
-        :rtype: int
-        :returns: 1 if successful, 0 otherwise.
-        """
-        result = self.execute('DATABASE PUT', self._quote(family), self._quote(key), self._quote(value))
-        res, value = result['result']
-        if res == '0':
-            raise AGIDBError('Unable to put vaule in databale: family=%s, key=%s, value=%s' % (family, key, value))
 
     def noop(self):
         """agi.noop() --> None
