@@ -140,7 +140,7 @@ class AGI(object):
         :rtype: int
         :returns: -1 on channel failure, or 0 if successful.
         """
-        self.execute('ANSWER')['result'][0]
+        return self.execute('ANSWER')['result'][0]
 
     def asyncagi_break(self):
         """Interrupts expected flow of Async AGI commands and returns control
