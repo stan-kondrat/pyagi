@@ -250,6 +250,23 @@ class AGI(object):
             except ValueError:
                 raise AGIError('Unable to convert result to digit: %s' % res)
 
+    def appexec(self, application, options=''):
+        """Executes application with given options.
+
+        See: http://www.voip-info.org/wiki/view/exec
+
+        :rtype: int
+        :returns: Whatever the application returns, or -2 on failure to find
+            application.
+
+        TODO: Rename this application to exec, to comply with AGI standard.
+        """
+        result = self.execute('EXEC', application, self._quote(options))
+        res = result['result'][0]
+        if res == '-2':
+            raise AGIAppError('Unable to find application: %s' % application)
+        return res
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -543,23 +560,6 @@ class AGI(object):
         If no channel name is given, hangs up the current channel
         """
         self.execute('HANGUP', channel)
-
-    def appexec(self, application, options=''):
-        """Executes application with given options.
-
-        See: http://www.voip-info.org/wiki/view/exec
-
-        :rtype: int
-        :returns: Whatever the application returns, or -2 on failure to find
-            application.
-
-        TODO: Rename this application to exec, to comply with AGI standard.
-        """
-        result = self.execute('EXEC', application, self._quote(options))
-        res = result['result'][0]
-        if res == '-2':
-            raise AGIAppError('Unable to find application: %s' % application)
-        return res
 
     def set_callerid(self, number):
         """agi.set_callerid(number) --> None
