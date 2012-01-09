@@ -591,10 +591,14 @@ class AGI(object):
         return value
 
     def get_full_variable(self, name, channel = None):
-        """Get a channel variable.
+        """Retrieve a channel variable. Understands complex variable names and
+        builtin variables, unlike ``get_variable``.
 
-        This function returns the value of the indicated channel variable.  If
-        the variable is not set, an empty string is returned.
+        See: http://www.voip-info.org/wiki/view/get+full+variable
+
+        :rtype: str
+        :returns: The variable, or an empty string if the variable doesn't
+            exist.
         """
         try:
            if channel:
