@@ -344,7 +344,10 @@ class AGI(object):
         self.execute('HANGUP', channel)
 
     def noop(self):
-        """Does nothing."""
+        """Does nothing.
+
+        See: http://www.voip-info.org/wiki/view/noop
+        """
         self.execute('NOOP')
 
     def receive_char(self, timeout=DEFAULT_TIMEOUT):
