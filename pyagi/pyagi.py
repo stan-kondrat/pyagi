@@ -340,6 +340,8 @@ class AGI(object):
     def hangup(self, channel=''):
         """Hangs up the specified channel. If no channel name is given, hangs
         up the current channel.
+
+        See: http://www.voip-info.org/wiki/view/hangup
         """
         self.execute('HANGUP', channel)
 
