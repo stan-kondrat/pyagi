@@ -617,7 +617,5 @@ class AGI(object):
         self.execute('VERBOSE', self._quote(message), level)
 
     def noop(self):
-        """agi.noop() --> None
-        Does nothing
-        """
+        """Does nothing."""
         self.execute('NOOP')
