@@ -148,6 +148,29 @@ class AGI(object):
         """
         pass
 
+    def channel_status(self, channel=''):
+        """Returns the status of the specified channel. If no channel name is
+        given then returns the status of the current channel.
+
+        :rtype: int
+        :returns: 0 - Channel is down and available.
+            1 - Channel is down, but reserved.
+            2 - Channel is off hook.
+            3 - Digits (or equivalent) have been dialed.
+            4 - Line is ringing.
+            5 - Remote end is ringing.
+            6 - Line is up.
+            7 - Line is busy.
+        """
+        try:
+           result = self.execute('CHANNEL STATUS', channel)
+        except AGIHangup:
+           raise
+        except AGIAppError:
+           result = {'result': ('-1','')}
+
+        return int(result['result'][0])
+
     def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
         """agi.wait_for_digit(timeout=DEFAULT_TIMEOUT) --> digit
         Waits for up to 'timeout' milliseconds for a channel to receive a DTMF
@@ -474,29 +497,6 @@ class AGI(object):
         Changes the callerid of the current channel.
         """
         self.execute('SET CALLERID', number)
-
-    def channel_status(self, channel=''):
-        """Returns the status of the specified channel. If no channel name is
-        given then returns the status of the current channel.
-
-        :rtype: int
-        :returns: 0 - Channel is down and available.
-            1 - Channel is down, but reserved.
-            2 - Channel is off hook.
-            3 - Digits (or equivalent) have been dialed.
-            4 - Line is ringing.
-            5 - Remote end is ringing.
-            6 - Line is up.
-            7 - Line is busy.
-        """
-        try:
-           result = self.execute('CHANNEL STATUS', channel)
-        except AGIHangup:
-           raise
-        except AGIAppError:
-           result = {'result': ('-1','')}
-
-        return int(result['result'][0])
 
     def set_variable(self, name, value):
         """Set a channel variable.
