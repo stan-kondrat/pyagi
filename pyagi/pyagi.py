@@ -267,6 +267,18 @@ class AGI(object):
             raise AGIAppError('Unable to find application: %s' % application)
         return res
 
+    def get_data(self, filename, timeout=DEFAULT_TIMEOUT, max_digits=255):
+        """Stream the given file, and receive DTMF data.
+
+        See: http://www.voip-info.org/wiki/view/get+data
+
+        :rtype: str
+        :returns: Digits received from the channel at the other end.
+        """
+        result = self.execute('GET DATA', filename, timeout, max_digits)
+        res, value = result['result']
+        return res
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -466,18 +478,6 @@ class AGI(object):
                 return chr(int(res))
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
-
-    def get_data(self, filename, timeout=DEFAULT_TIMEOUT, max_digits=255):
-        """Stream the given file, and receive DTMF data.
-
-        See: http://www.voip-info.org/wiki/view/get+data
-
-        :rtype: str
-        :returns: Digits received from the channel at the other end.
-        """
-        result = self.execute('GET DATA', filename, timeout, max_digits)
-        res, value = result['result']
-        return res
 
     def get_option(self, filename, escape_digits='', timeout=0):
         """agi.get_option(filename, escape_digits='', timeout=0) --> digit
