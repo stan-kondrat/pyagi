@@ -301,6 +301,26 @@ class AGI(object):
         res, value = result['result']
         return value
 
+    def get_option(self, filename, escape_digits='', timeout=0):
+        """Behaves similar to STREAM FILE but used with a timeout option.
+
+        See: http://www.voip-info.org/wiki/view/get+option
+        """
+        escape_digits = self._process_digit_list(escape_digits)
+        if timeout:
+            response = self.execute('GET OPTION', filename, escape_digits, timeout)
+        else:
+            response = self.execute('GET OPTION', filename, escape_digits)
+
+        res = response['result'][0]
+        if res == '0':
+            return ''
+        else:
+            try:
+                return chr(int(res))
+            except:
+                raise AGIError('Unable to convert result to char: %s' % res)
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -493,26 +513,6 @@ class AGI(object):
         escape_digits = self._process_digit_list(escape_digits)
         if format: format = self._quote(format)
         res = self.execute('SAY DATETIME', seconds, escape_digits, format, zone)['result'][0]
-        if res == '0':
-            return ''
-        else:
-            try:
-                return chr(int(res))
-            except:
-                raise AGIError('Unable to convert result to char: %s' % res)
-
-    def get_option(self, filename, escape_digits='', timeout=0):
-        """Behaves similar to STREAM FILE but used with a timeout option.
-
-        See: http://www.voip-info.org/wiki/view/get+option
-        """
-        escape_digits = self._process_digit_list(escape_digits)
-        if timeout:
-            response = self.execute('GET OPTION', filename, escape_digits, timeout)
-        else:
-            response = self.execute('GET OPTION', filename, escape_digits)
-
-        res = response['result'][0]
         if res == '0':
             return ''
         else:
