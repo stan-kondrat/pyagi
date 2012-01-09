@@ -445,6 +445,28 @@ class AGI(object):
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
 
+    def say_number(self, number, escape_digits=''):
+        """Say a given number, returning early if any of the given DTMF digits
+        are received on the channel.
+
+        See: http://www.voip-info.org/wiki/view/say+number
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed or -1 on
+            error/hangup.
+        """
+        number = self._process_digit_list(number)
+        escape_digits = self._process_digit_list(escape_digits)
+        res = self.execute('SAY NUMBER', number, escape_digits)['result'][0]
+        if res == '0':
+            return ''
+        else:
+            try:
+                return chr(int(res))
+            except:
+                raise AGIError('Unable to convert result to char: %s' % res)
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -513,28 +535,6 @@ class AGI(object):
         res = self.execute('SEND IMAGE', filename)['result'][0]
         if res != '0':
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
-
-    def say_number(self, number, escape_digits=''):
-        """Say a given number, returning early if any of the given DTMF digits
-        are received on the channel.
-
-        See: http://www.voip-info.org/wiki/view/say+number
-
-        :rtype: int
-        :returns: 0 if playback completes without a digit being pressed, or the
-            ASCII numerical value of the digit if one was pressed or -1 on
-            error/hangup.
-        """
-        number = self._process_digit_list(number)
-        escape_digits = self._process_digit_list(escape_digits)
-        res = self.execute('SAY NUMBER', number, escape_digits)['result'][0]
-        if res == '0':
-            return ''
-        else:
-            try:
-                return chr(int(res))
-            except:
-                raise AGIError('Unable to convert result to char: %s' % res)
 
     def say_phonetic(self, characters, escape_digits=''):
         """agi.say_phonetic(string, escape_digits='') --> digit
