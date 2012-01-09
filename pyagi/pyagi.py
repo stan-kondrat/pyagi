@@ -505,10 +505,15 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def say_alpha(self, characters, escape_digits=''):
-        """agi.say_alpha(string, escape_digits='') --> digit
-        Say a given character string, returning early if any of the given DTMF
-        digits are received on the channel.
-        Throws AGIError on channel failure
+        """Say a given character string, returning early if any of the given
+        DTMF digits are received on the channel.
+
+        See: http://www.voip-info.org/wiki/view/say+alpha
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed. Returns -1
+            on error/hangup.
         """
         characters = self._process_digit_list(characters)
         escape_digits = self._process_digit_list(escape_digits)
