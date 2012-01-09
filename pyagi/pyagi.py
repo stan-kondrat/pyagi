@@ -593,9 +593,8 @@ class AGI(object):
         self.execute('SET AUTOHANGUP', secs)
 
     def hangup(self, channel=''):
-        """agi.hangup(channel='')
-        Hangs up the specified channel.
-        If no channel name is given, hangs up the current channel
+        """Hangs up the specified channel. If no channel name is given, hangs
+        up the current channel.
         """
         self.execute('HANGUP', channel)
 
