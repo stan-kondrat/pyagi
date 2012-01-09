@@ -27,7 +27,6 @@ class AGI(object):
     DEFAULT_RECORD = 20000
 
     def __init__(self):
-        self._got_sighup = False
         signal(SIGHUP, self._handle_sighup)  # handle SIGHUP
         self.env = {}
         self._get_agi_env()
@@ -64,16 +63,13 @@ class AGI(object):
         return ''.join(['"', str(string), '"'])
 
     def _handle_sighup(self, signum, frame):
-        """Handle the SIGHUP signal"""
-        self._got_sighup = True
-
-    def test_hangup(self):
-        """This function throws AGIHangup if we have recieved a SIGHUP"""
-        if self._got_sighup:
-           raise AGISIGHUPHangup("Received SIGHUP from Asterisk")
+        """Handle the SIGHUP signal. SIGHUP is sent to us by Asterisk whenever
+        the caller hangs up. In this circumstance, we should simply raise an
+        ``AGISIGHUPHangup`` exception so the user can deal with it.
+        """
+        raise AGISIGHUPHangup('Received SIGHUP from Asterisk.')
 
     def execute(self, command, *args):
-        self.test_hangup()
 
         try:
             self.send_command(command, *args)
