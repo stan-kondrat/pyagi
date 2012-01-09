@@ -401,6 +401,28 @@ class AGI(object):
         except:
             raise AGIError('Unable to convert result to digit: %s' % res)
 
+    def say_alpha(self, characters, escape_digits=''):
+        """Say a given character string, returning early if any of the given
+        DTMF digits are received on the channel.
+
+        See: http://www.voip-info.org/wiki/view/say+alpha
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed. Returns -1
+            on error/hangup.
+        """
+        characters = self._process_digit_list(characters)
+        escape_digits = self._process_digit_list(escape_digits)
+        res = self.execute('SAY ALPHA', characters, escape_digits)['result'][0]
+        if res == '0':
+            return ''
+        else:
+            try:
+                return chr(int(res))
+            except:
+                raise AGIError('Unable to convert result to char: %s' % res)
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -496,28 +518,6 @@ class AGI(object):
         number = self._process_digit_list(number)
         escape_digits = self._process_digit_list(escape_digits)
         res = self.execute('SAY NUMBER', number, escape_digits)['result'][0]
-        if res == '0':
-            return ''
-        else:
-            try:
-                return chr(int(res))
-            except:
-                raise AGIError('Unable to convert result to char: %s' % res)
-
-    def say_alpha(self, characters, escape_digits=''):
-        """Say a given character string, returning early if any of the given
-        DTMF digits are received on the channel.
-
-        See: http://www.voip-info.org/wiki/view/say+alpha
-
-        :rtype: int
-        :returns: 0 if playback completes without a digit being pressed, or the
-            ASCII numerical value of the digit if one was pressed. Returns -1
-            on error/hangup.
-        """
-        characters = self._process_digit_list(characters)
-        escape_digits = self._process_digit_list(escape_digits)
-        res = self.execute('SAY ALPHA', characters, escape_digits)['result'][0]
         if res == '0':
             return ''
         else:
