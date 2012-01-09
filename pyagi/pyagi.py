@@ -593,9 +593,13 @@ class AGI(object):
         self.execute('VERBOSE', self._quote(message), level)
 
     def database_put(self, family, key, value):
-        """agi.database_put(family, key, value) --> None
-        Adds or updates an entry in the Asterisk database for a
-        given family, key, and value.
+        """Adds or updates an entry in the Asterisk database for a given
+        family, key, and value.
+
+        See: http://www.voip-info.org/wiki/view/database+put
+
+        :rtype: int
+        :returns: 1 if successful, 0 otherwise.
         """
         result = self.execute('DATABASE PUT', self._quote(family), self._quote(key), self._quote(value))
         res, value = result['result']
