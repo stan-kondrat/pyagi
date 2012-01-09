@@ -356,10 +356,15 @@ class AGI(object):
         self.execute('SEND TEXT', self._quote(text))['result'][0]
 
     def receive_char(self, timeout=DEFAULT_TIMEOUT):
-        """agi.receive_char(timeout=DEFAULT_TIMEOUT) --> chr
-        Receives a character of text on a channel.  Specify timeout to be the
-        maximum time to wait for input in milliseconds, or 0 for infinite. Most channels
-        do not support the reception of text.
+        """Receives a character of text on a channel. Most channels do not
+        support the reception of text.
+
+        See: http://www.voip-info.org/wiki/view/receive+char
+
+        :rtype: int
+        :returns: The decimal value of the character if one is received, or 0 if
+            the channel does not support text reception. Returns -1 only on
+            error/hangup.
         """
         res = self.execute('RECEIVE CHAR', timeout)['result'][0]
 
