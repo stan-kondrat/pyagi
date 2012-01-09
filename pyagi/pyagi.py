@@ -343,6 +343,10 @@ class AGI(object):
         """
         self.execute('HANGUP', channel)
 
+    def noop(self):
+        """Does nothing."""
+        self.execute('NOOP')
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -615,7 +619,3 @@ class AGI(object):
         <level> is the the verbose level (1-4)
         """
         self.execute('VERBOSE', self._quote(message), level)
-
-    def noop(self):
-        """Does nothing."""
-        self.execute('NOOP')
