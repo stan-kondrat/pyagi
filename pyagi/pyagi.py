@@ -587,9 +587,13 @@ class AGI(object):
             raise AGIDBError('Unable to put vaule in databale: family=%s, key=%s, value=%s' % (family, key, value))
 
     def database_deltree(self, family, key=''):
-        """agi.database_deltree(family, key='') --> None
-        Deletes a family or specific keytree with in a family
-        in the Asterisk database.
+        """Deletes a family or specific keytree within a family in the Asterisk
+        database.
+
+        See: http://www.voip-info.org/wiki/view/database+deltree
+
+        :rtype: int
+        :returns: 1 if successful, 0 otherwise.
         """
         result = self.execute('DATABASE DELTREE', self._quote(family), self._quote(key))
         res, value = result['result']
