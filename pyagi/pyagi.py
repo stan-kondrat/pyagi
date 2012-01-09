@@ -573,11 +573,13 @@ class AGI(object):
         self.execute('VERBOSE', self._quote(message), level)
 
     def database_get(self, family, key):
-        """agi.database_get(family, key) --> str
-        Retrieves an entry in the Asterisk database for a given family and key.
-        Returns 0 if <key> is not set.  Returns 1 if <key>
-        is set and returns the variable in parenthesis
-        example return code: 200 result=1 (testvariable)
+        """Retrieves an entry in the Asterisk database for a given family and
+        key.
+
+        See: http://www.voip-info.org/wiki/view/database+get
+
+        :rtype: str
+        :returns: The database entry (if one exists), or an empty string.
         """
         family = '"%s"' % family
         key = '"%s"' % key
