@@ -133,7 +133,7 @@ class AGI(object):
         return self._quote(digits)
 
     def answer(self):
-        """Answers channel if not already in answer state.
+        """Answer channel if not already in answer state.
 
         See: http://www.voip-info.org/wiki/view/answer
         """
