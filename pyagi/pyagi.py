@@ -649,10 +649,9 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def set_context(self, context):
-        """agi.set_context(context)
-        Sets the context for continuation upon exiting the application.
-        No error appears to be produced.  Does not set exten or priority
-        Use at your own risk.  Ensure that you specify a valid context.
+        """Sets the context for continuation upon exiting the application.
+
+        See: http://www.voip-info.org/wiki/view/set+context
         """
         self.execute('SET CONTEXT', context)
 
