@@ -26,8 +26,11 @@ class TestAGI(TestCase):
     def test_default_timeout_is_int(self):
         self.assertIsInstance(self.agi.DEFAULT_TIMEOUT, int)
 
-    def test_default_record_is_int(self):
-        self.assertIsInstance(self.agi.DEFAULT_RECORD, int)
+    def test_get_agi_env_sets_env_attr(self):
+        self.assertIsInstance(self.agi.env, dict)
+
+    def test_get_agi_env_sets_vars_from_asterisk(self):
+        self.assertEquals(self.agi.env, {'agi_test': 'test', 'agi_test2': 'test'})
 
     def tearDown(self):
         del self.agi
