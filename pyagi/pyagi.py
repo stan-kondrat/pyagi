@@ -687,7 +687,9 @@ class AGI(object):
         self.set_priority(priority)
 
     def set_variable(self, name, value):
-        """Set a channel variable.
+        """Sets a variable to the current channel.
+
+        See: http://www.voip-info.org/wiki/view/set+variable
         """
         self.execute('SET VARIABLE', self._quote(name), self._quote(value))
 
