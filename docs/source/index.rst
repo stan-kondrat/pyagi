@@ -11,6 +11,13 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+Reference:
+
+.. toctree::
+    :maxdepth: 2
+
+    pyagi
+
 Indices and tables
 ==================
 
