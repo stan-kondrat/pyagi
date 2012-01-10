@@ -580,9 +580,13 @@ class AGI(object):
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
 
     def say_time(self, seconds, escape_digits=''):
-        """agi.say_time(seconds, escape_digits='') --> digit
-        Say a given time, returning early if any of the given DTMF digits are
-        pressed.  The time should be in seconds since the UNIX Epoch (Jan 1, 1970 00:00:00)
+        """Say a given time, returning early if any of the given DTMF digits
+        are received on the channel.
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed or -1 on
+            error/hangup.
         """
         escape_digits = self._process_digit_list(escape_digits)
         res = self.execute('SAY TIME', seconds, escape_digits)['result'][0]
