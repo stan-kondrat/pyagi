@@ -553,6 +553,22 @@ class AGI(object):
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
 
+    def send_image(self, filename):
+        """Sends the given image on a channel. Most channels do not support the
+        transmission of images.
+
+        See: http://www.voip-info.org/wiki/view/send+image
+
+        :rtype: int
+        :returns: 0 if image is sent, or if the channel does not support image
+            transmission. Returns -1 only on error/hangup.
+
+        Image names should not include extensions.
+        """
+        res = self.execute('SEND IMAGE', filename)['result'][0]
+        if res != '0':
+            raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -611,22 +627,6 @@ class AGI(object):
                 return chr(int(res))
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
-
-    def send_image(self, filename):
-        """Sends the given image on a channel. Most channels do not support the
-        transmission of images.
-
-        See: http://www.voip-info.org/wiki/view/send+image
-
-        :rtype: int
-        :returns: 0 if image is sent, or if the channel does not support image
-            transmission. Returns -1 only on error/hangup.
-
-        Image names should not include extensions.
-        """
-        res = self.execute('SEND IMAGE', filename)['result'][0]
-        if res != '0':
-            raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
 
     def set_context(self, context):
         """agi.set_context(context)
