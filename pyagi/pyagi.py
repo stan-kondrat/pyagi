@@ -634,15 +634,6 @@ class AGI(object):
         """
         self.execute('SET VARIABLE', self._quote(name), self._quote(value))
 
-    def tdd_mode(self, mode='off'):
-        """agi.tdd_mode(mode='on'|'off') --> None
-        Enable/Disable TDD transmission/reception on a channel.
-        Throws AGIAppError if channel is not TDD-capable.
-        """
-        res = self.execute('TDD MODE', mode)['result'][0]
-        if res == '0':
-            raise AGIAppError('Channel %s is not TDD-capable')
-
     def stream_file(self, filename, escape_digits='', sample_offset=0):
         """Send the given file, allowing playback to be interrupted by the
         given digits, if any.
@@ -664,6 +655,15 @@ class AGI(object):
                 return chr(int(res))
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
+
+    def tdd_mode(self, mode='off'):
+        """agi.tdd_mode(mode='on'|'off') --> None
+        Enable/Disable TDD transmission/reception on a channel.
+        Throws AGIAppError if channel is not TDD-capable.
+        """
+        res = self.execute('TDD MODE', mode)['result'][0]
+        if res == '0':
+            raise AGIAppError('Channel %s is not TDD-capable')
 
     def control_stream_file(self, filename, escape_digits='', skipms=3000, fwd='', rew='', pause=''):
         """
