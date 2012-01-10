@@ -510,6 +510,25 @@ class AGI(object):
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
 
+    def say_time(self, seconds, escape_digits=''):
+        """Say a given time, returning early if any of the given DTMF digits
+        are received on the channel.
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed or -1 on
+            error/hangup.
+        """
+        escape_digits = self._process_digit_list(escape_digits)
+        res = self.execute('SAY TIME', seconds, escape_digits)['result'][0]
+        if res == '0':
+            return ''
+        else:
+            try:
+                return chr(int(res))
+            except:
+                raise AGIError('Unable to convert result to char: %s' % res)
+
     def send_text(self, text=''):
         """agi.send_text(text='') --> None
         Sends the given text on a channel.  Most channels do not support the
@@ -578,25 +597,6 @@ class AGI(object):
         res = self.execute('SEND IMAGE', filename)['result'][0]
         if res != '0':
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
-
-    def say_time(self, seconds, escape_digits=''):
-        """Say a given time, returning early if any of the given DTMF digits
-        are received on the channel.
-
-        :rtype: int
-        :returns: 0 if playback completes without a digit being pressed, or the
-            ASCII numerical value of the digit if one was pressed or -1 on
-            error/hangup.
-        """
-        escape_digits = self._process_digit_list(escape_digits)
-        res = self.execute('SAY TIME', seconds, escape_digits)['result'][0]
-        if res == '0':
-            return ''
-        else:
-            try:
-                return chr(int(res))
-            except:
-                raise AGIError('Unable to convert result to char: %s' % res)
 
     def say_datetime(self, seconds, escape_digits='', format='', zone=''):
         """agi.say_datetime(seconds, escape_digits='', format='', zone='') --> digit
