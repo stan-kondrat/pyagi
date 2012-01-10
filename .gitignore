@@ -5,3 +5,6 @@
 
 # Coverage reports.
 .coverage
+
+# Sphinx docs.
+build
