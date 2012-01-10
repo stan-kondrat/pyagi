@@ -599,10 +599,15 @@ class AGI(object):
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
 
     def say_datetime(self, seconds, escape_digits='', format='', zone=''):
-        """agi.say_datetime(seconds, escape_digits='', format='', zone='') --> digit
-        Say a given date in the format specfied (see voicemail.conf), returning
-        early if any of the given DTMF digits are pressed.  The date should be
-        in seconds since the UNIX Epoch (Jan 1, 1970 00:00:00).
+        """Say a given time, returning early if any of the given DTMF digits
+        are received on the channel.
+
+        See: http://www.voip-info.org/wiki/view/say+datetime
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed or -1 on
+            error/hangup.
         """
         escape_digits = self._process_digit_list(escape_digits)
         if format: format = self._quote(format)
