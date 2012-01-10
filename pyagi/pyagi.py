@@ -700,8 +700,9 @@ class AGI(object):
         self.set_priority(priority)
 
     def verbose(self, message, level=1):
-        """agi.verbose(message='', level=1) --> None
-        Sends <message> to the console via verbose message system.
-        <level> is the the verbose level (1-4)
+        """Sends message to the console via verbose message system. level is
+        the verbose level (1-4).
+
+        See: http://www.voip-info.org/wiki/view/verbose
         """
         self.execute('VERBOSE', self._quote(message), level)
