@@ -613,10 +613,16 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def send_image(self, filename):
-        """agi.send_image(filename) --> None
-        Sends the given image on a channel.  Most channels do not support the
-        transmission of images.   Image names should not include extensions.
-        Throws AGIError on channel failure
+        """Sends the given image on a channel. Most channels do not support the
+        transmission of images.
+
+        See: http://www.voip-info.org/wiki/view/send+image
+
+        :rtype: int
+        :returns: 0 if image is sent, or if the channel does not support image
+            transmission. Returns -1 only on error/hangup.
+
+        Image names should not include extensions.
         """
         res = self.execute('SEND IMAGE', filename)['result'][0]
         if res != '0':
