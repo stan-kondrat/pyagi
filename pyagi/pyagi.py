@@ -597,6 +597,13 @@ class AGI(object):
         """
         self.execute('SET CALLERID', number)
 
+    def set_context(self, context):
+        """Sets the context for continuation upon exiting the application.
+
+        See: http://www.voip-info.org/wiki/view/set+context
+        """
+        self.execute('SET CONTEXT', context)
+
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
         Enable/Disable TDD transmission/reception on a channel.
@@ -647,13 +654,6 @@ class AGI(object):
                 return chr(int(res))
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
-
-    def set_context(self, context):
-        """Sets the context for continuation upon exiting the application.
-
-        See: http://www.voip-info.org/wiki/view/set+context
-        """
-        self.execute('SET CONTEXT', context)
 
     def set_extension(self, extension):
         """agi.set_extension(extension)
