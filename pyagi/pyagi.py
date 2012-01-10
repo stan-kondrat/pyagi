@@ -581,6 +581,15 @@ class AGI(object):
         """
         self.execute('SEND TEXT', self._quote(text))['result'][0]
 
+    def set_autohangup(self, secs):
+        """Cause the channel to automatically hangup at time seconds in the
+        future. Of course it can be hungup before then as well. Setting to 0
+        will cause the autohangup feature to be disabled on this channel.
+
+        See: http://www.voip-info.org/wiki/view/set+autohangup
+        """
+        self.execute('SET AUTOHANGUP', secs)
+
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
         Enable/Disable TDD transmission/reception on a channel.
@@ -663,15 +672,6 @@ class AGI(object):
         self.set_context(context)
         self.set_extension(extension)
         self.set_priority(priority)
-
-    def set_autohangup(self, secs):
-        """Cause the channel to automatically hangup at time seconds in the
-        future. Of course it can be hungup before then as well. Setting to 0
-        will cause the autohangup feature to be disabled on this channel.
-
-        See: http://www.voip-info.org/wiki/view/set+autohangup
-        """
-        self.execute('SET AUTOHANGUP', secs)
 
     def set_callerid(self, number):
         """agi.set_callerid(number) --> None
