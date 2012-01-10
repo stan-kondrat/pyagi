@@ -674,8 +674,9 @@ class AGI(object):
         self.set_priority(priority)
 
     def set_callerid(self, number):
-        """agi.set_callerid(number) --> None
-        Changes the callerid of the current channel.
+        """Changes the callerid of the current channel.
+
+        See: http://www.voip-info.org/wiki/view/set+callerid
         """
         self.execute('SET CALLERID', number)
 
