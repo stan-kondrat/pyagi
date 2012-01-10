@@ -259,10 +259,16 @@ class AGI(object):
             raise AGIDBError('Unable to put vaule in databale: family=%s, key=%s, value=%s' % (family, key, value))
 
     def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
-        """agi.wait_for_digit(timeout=DEFAULT_TIMEOUT) --> digit
-        Waits for up to 'timeout' milliseconds for a channel to receive a DTMF
-        digit.  Returns digit dialed
-        Throws AGIError on channel falure
+        """Waits up to timeout milliseconds for channel to receive a DTMF
+        digit.
+
+        See: http://www.voip-info.org/wiki/view/wait+for+digit
+
+        :rtype: chr
+        :returns: -1 on channel failure, 0 if no digit is received in the
+            timeout, or the numerical value of the ASCII of the digit if one is
+            received. Use -1 for the timeout value if you desire the call to
+            block indefinitely.
         """
         res = self.execute('WAIT FOR DIGIT', timeout)['result'][0]
         if res == '0':
