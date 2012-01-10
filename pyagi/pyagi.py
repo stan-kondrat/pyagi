@@ -23,8 +23,8 @@ class AGI(object):
     :attr int DEFAULT_RECORD: The default allowed recording time (in ms) to use
         for methods that take a record time argument.
     """
-    DEFAULT_TIMEOUT = 2000
     DEFAULT_RECORD = 20000
+    DEFAULT_TIMEOUT = 2000
 
     def __init__(self):
         signal(SIGHUP, self._handle_sighup)  # handle SIGHUP
