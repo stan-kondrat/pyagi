@@ -680,9 +680,12 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def tdd_mode(self, mode='off'):
-        """agi.tdd_mode(mode='on'|'off') --> None
-        Enable/Disable TDD transmission/reception on a channel.
-        Throws AGIAppError if channel is not TDD-capable.
+        """Enable/disable TDD transmission/reception on a channel.
+
+        See: http://www.voip-info.org/wiki/view/tdd+mode
+
+        :rtype: int
+        :returns: 1 if successful, or 0 if channel is not TDD-capable.
         """
         res = self.execute('TDD MODE', mode)['result'][0]
         if res == '0':
