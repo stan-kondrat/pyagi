@@ -671,10 +671,10 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def set_priority(self, priority):
-        """agi.set_priority(priority)
-        Sets the priority for continuation upon exiting the application.
-        No error appears to be produced.  Does not set exten or context
-        Use at your own risk.  Ensure that you specify a valid priority.
+        """Changes the priority for continuation upon exiting the application.
+        The priority must be a valid priority or label.
+
+        See: http://www.voip-info.org/wiki/view/set+priority
         """
         self.execute('set priority', priority)
 
