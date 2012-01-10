@@ -644,14 +644,15 @@ class AGI(object):
             raise AGIAppError('Channel %s is not TDD-capable')
 
     def stream_file(self, filename, escape_digits='', sample_offset=0):
-        """agi.stream_file(filename, escape_digits='', sample_offset=0) --> digit
-        Send the given file, allowing playback to be interrupted by the given
-        digits, if any.  escape_digits is a string '12345' or a list  of
-        ints [1,2,3,4,5] or strings ['1','2','3'] or mixed [1,'2',3,'4']
-        If sample offset is provided then the audio will seek to sample
-        offset before play starts.  Returns  digit if one was pressed.
-        Throws AGIError if the channel was disconnected.  Remember, the file
-        extension must not be included in the filename.
+        """Send the given file, allowing playback to be interrupted by the
+        given digits, if any.
+
+        See: http://www.voip-info.org/wiki/view/stream+file
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or
+            the ASCII numerical value of the digit if one was pressed, or -1
+            on error or if the channel was disconnected.
         """
         escape_digits = self._process_digit_list(escape_digits)
         response = self.execute('STREAM FILE', filename, escape_digits, sample_offset)
