@@ -444,6 +444,28 @@ class AGI(object):
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
 
+    def say_datetime(self, seconds, escape_digits='', format='', zone=''):
+        """Say a given time, returning early if any of the given DTMF digits
+        are received on the channel.
+
+        See: http://www.voip-info.org/wiki/view/say+datetime
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed or -1 on
+            error/hangup.
+        """
+        escape_digits = self._process_digit_list(escape_digits)
+        if format: format = self._quote(format)
+        res = self.execute('SAY DATETIME', seconds, escape_digits, format, zone)['result'][0]
+        if res == '0':
+            return ''
+        else:
+            try:
+                return chr(int(res))
+            except:
+                raise AGIError('Unable to convert result to char: %s' % res)
+
     def say_digits(self, digits, escape_digits=''):
         """Say a given digit string, returning early if any of the given DTMF
         digits are received on the channel.
@@ -597,28 +619,6 @@ class AGI(object):
         res = self.execute('SEND IMAGE', filename)['result'][0]
         if res != '0':
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
-
-    def say_datetime(self, seconds, escape_digits='', format='', zone=''):
-        """Say a given time, returning early if any of the given DTMF digits
-        are received on the channel.
-
-        See: http://www.voip-info.org/wiki/view/say+datetime
-
-        :rtype: int
-        :returns: 0 if playback completes without a digit being pressed, or the
-            ASCII numerical value of the digit if one was pressed or -1 on
-            error/hangup.
-        """
-        escape_digits = self._process_digit_list(escape_digits)
-        if format: format = self._quote(format)
-        res = self.execute('SAY DATETIME', seconds, escape_digits, format, zone)['result'][0]
-        if res == '0':
-            return ''
-        else:
-            try:
-                return chr(int(res))
-            except:
-                raise AGIError('Unable to convert result to char: %s' % res)
 
     def set_context(self, context):
         """agi.set_context(context)
