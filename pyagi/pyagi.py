@@ -604,6 +604,13 @@ class AGI(object):
         """
         self.execute('SET CONTEXT', context)
 
+    def set_extension(self, extension):
+        """Changes the extension for continuation upon exiting the application.
+
+        See: http://www.voip-info.org/wiki/view/set+extension
+        """
+        self.execute('SET EXTENSION', extension)
+
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
         Enable/Disable TDD transmission/reception on a channel.
@@ -654,13 +661,6 @@ class AGI(object):
                 return chr(int(res))
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
-
-    def set_extension(self, extension):
-        """Changes the extension for continuation upon exiting the application.
-
-        See: http://www.voip-info.org/wiki/view/set+extension
-        """
-        self.execute('SET EXTENSION', extension)
 
     def set_priority(self, priority):
         """agi.set_priority(priority)
