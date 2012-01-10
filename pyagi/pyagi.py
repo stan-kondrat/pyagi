@@ -611,6 +611,14 @@ class AGI(object):
         """
         self.execute('SET EXTENSION', extension)
 
+    def set_music(self):
+        """Enables/disables the music on hold generator. If class is not
+        specified, then the 'default' music on hold class will be used.
+
+        See: http://www.voip-info.org/wiki/view/set+music
+        """
+        pass
+
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
         Enable/Disable TDD transmission/reception on a channel.
