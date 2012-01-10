@@ -627,6 +627,13 @@ class AGI(object):
         """
         self.execute('set priority', priority)
 
+    def set_variable(self, name, value):
+        """Sets a variable to the current channel.
+
+        See: http://www.voip-info.org/wiki/view/set+variable
+        """
+        self.execute('SET VARIABLE', self._quote(name), self._quote(value))
+
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
         Enable/Disable TDD transmission/reception on a channel.
@@ -685,13 +692,6 @@ class AGI(object):
         self.set_context(context)
         self.set_extension(extension)
         self.set_priority(priority)
-
-    def set_variable(self, name, value):
-        """Sets a variable to the current channel.
-
-        See: http://www.voip-info.org/wiki/view/set+variable
-        """
-        self.execute('SET VARIABLE', self._quote(name), self._quote(value))
 
     def verbose(self, message, level=1):
         """agi.verbose(message='', level=1) --> None
