@@ -619,6 +619,14 @@ class AGI(object):
         """
         pass
 
+    def set_priority(self, priority):
+        """Changes the priority for continuation upon exiting the application.
+        The priority must be a valid priority or label.
+
+        See: http://www.voip-info.org/wiki/view/set+priority
+        """
+        self.execute('set priority', priority)
+
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
         Enable/Disable TDD transmission/reception on a channel.
@@ -669,14 +677,6 @@ class AGI(object):
                 return chr(int(res))
             except:
                 raise AGIError('Unable to convert result to char: %s' % res)
-
-    def set_priority(self, priority):
-        """Changes the priority for continuation upon exiting the application.
-        The priority must be a valid priority or label.
-
-        See: http://www.voip-info.org/wiki/view/set+priority
-        """
-        self.execute('set priority', priority)
 
     def goto_on_exit(self, context='', extension='', priority=''):
         context = context or self.env['agi_context']
