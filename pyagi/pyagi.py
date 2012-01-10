@@ -173,6 +173,29 @@ class AGI(object):
 
         return int(result['result'][0])
 
+    def control_stream_file(self, filename, escape_digits='', skipms=3000, fwd='', rew='', pause=''):
+        """Send the given file, allowing playback to be controlled by the given
+        digits, if any. Use double quotes for the digits if you wish none to be
+        permitted.
+
+        See: http://www.voip-info.org/wiki/view/control+stream+file
+
+        :rtype: int
+        :returns: 0 if playback completes without a digit being pressed, or the
+            ASCII numerical value of the digit if one was pressed, or -1 on
+            error or if the channel was disconnected.
+        """
+        escape_digits = self._process_digit_list(escape_digits)
+        response = self.execute('CONTROL STREAM FILE', self._quote(filename), escape_digits, self._quote(skipms), self._quote(fwd), self._quote(rew), self._quote(pause))
+        res = response['result'][0]
+        if res == '0':
+            return ''
+        else:
+            try:
+                return chr(int(res))
+            except:
+                raise AGIError('Unable to convert result to char: %s' % res)
+
     def database_del(self, family, key):
         """Deletes an entry in the Asterisk database for a given family and
         key.
@@ -664,29 +687,6 @@ class AGI(object):
         res = self.execute('TDD MODE', mode)['result'][0]
         if res == '0':
             raise AGIAppError('Channel %s is not TDD-capable')
-
-    def control_stream_file(self, filename, escape_digits='', skipms=3000, fwd='', rew='', pause=''):
-        """Send the given file, allowing playback to be controlled by the given
-        digits, if any. Use double quotes for the digits if you wish none to be
-        permitted.
-
-        See: http://www.voip-info.org/wiki/view/control+stream+file
-
-        :rtype: int
-        :returns: 0 if playback completes without a digit being pressed, or the
-            ASCII numerical value of the digit if one was pressed, or -1 on
-            error or if the channel was disconnected.
-        """
-        escape_digits = self._process_digit_list(escape_digits)
-        response = self.execute('CONTROL STREAM FILE', self._quote(filename), escape_digits, self._quote(skipms), self._quote(fwd), self._quote(rew), self._quote(pause))
-        res = response['result'][0]
-        if res == '0':
-            return ''
-        else:
-            try:
-                return chr(int(res))
-            except:
-                raise AGIError('Unable to convert result to char: %s' % res)
 
     def goto_on_exit(self, context='', extension='', priority=''):
         context = context or self.env['agi_context']
