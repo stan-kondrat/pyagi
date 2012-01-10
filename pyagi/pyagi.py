@@ -656,10 +656,9 @@ class AGI(object):
                 raise AGIError('Unable to convert result to char: %s' % res)
 
     def set_extension(self, extension):
-        """agi.set_extension(extension)
-        Sets the extension for continuation upon exiting the application.
-        No error appears to be produced.  Does not set context or priority
-        Use at your own risk.  Ensure that you specify a valid extension.
+        """Changes the extension for continuation upon exiting the application.
+
+        See: http://www.voip-info.org/wiki/view/set+extension
         """
         self.execute('SET EXTENSION', extension)
 
