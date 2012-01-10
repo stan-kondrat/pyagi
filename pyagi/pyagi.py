@@ -570,10 +570,14 @@ class AGI(object):
             raise AGIAppError('Channel falure on channel %s' % self.env.get('agi_channel','UNKNOWN'))
 
     def send_text(self, text=''):
-        """agi.send_text(text='') --> None
-        Sends the given text on a channel.  Most channels do not support the
+        """Sends the given text on a channel. Most channels do not support the
         transmission of text.
-        Throws AGIError on error/hangup
+
+        See: http://www.voip-info.org/wiki/view/send+text
+
+        :rtype: int
+        :returns: 0 if text is sent, or if the channel does not support text
+            transmission. Returns -1 only on error/hangup.
         """
         self.execute('SEND TEXT', self._quote(text))['result'][0]
 
