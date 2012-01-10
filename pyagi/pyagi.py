@@ -590,6 +590,13 @@ class AGI(object):
         """
         self.execute('SET AUTOHANGUP', secs)
 
+    def set_callerid(self, number):
+        """Changes the callerid of the current channel.
+
+        See: http://www.voip-info.org/wiki/view/set+callerid
+        """
+        self.execute('SET CALLERID', number)
+
     def tdd_mode(self, mode='off'):
         """agi.tdd_mode(mode='on'|'off') --> None
         Enable/Disable TDD transmission/reception on a channel.
@@ -672,13 +679,6 @@ class AGI(object):
         self.set_context(context)
         self.set_extension(extension)
         self.set_priority(priority)
-
-    def set_callerid(self, number):
-        """Changes the callerid of the current channel.
-
-        See: http://www.voip-info.org/wiki/view/set+callerid
-        """
-        self.execute('SET CALLERID', number)
 
     def set_variable(self, name, value):
         """Set a channel variable.
