@@ -258,27 +258,6 @@ class AGI(object):
         if res == '0':
             raise AGIDBError('Unable to put vaule in databale: family=%s, key=%s, value=%s' % (family, key, value))
 
-    def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
-        """Waits up to timeout milliseconds for channel to receive a DTMF
-        digit.
-
-        See: http://www.voip-info.org/wiki/view/wait+for+digit
-
-        :rtype: chr
-        :returns: -1 on channel failure, 0 if no digit is received in the
-            timeout, or the numerical value of the ASCII of the digit if one is
-            received. Use -1 for the timeout value if you desire the call to
-            block indefinitely.
-        """
-        res = self.execute('WAIT FOR DIGIT', timeout)['result'][0]
-        if res == '0':
-            return ''
-        else:
-            try:
-                return chr(int(res))
-            except ValueError:
-                raise AGIError('Unable to convert result to digit: %s' % res)
-
     def appexec(self, application, options=''):
         """Executes application with given options.
 
@@ -712,3 +691,24 @@ class AGI(object):
         See: http://www.voip-info.org/wiki/view/verbose
         """
         self.execute('VERBOSE', self._quote(message), level)
+
+    def wait_for_digit(self, timeout=DEFAULT_TIMEOUT):
+        """Waits up to timeout milliseconds for channel to receive a DTMF
+        digit.
+
+        See: http://www.voip-info.org/wiki/view/wait+for+digit
+
+        :rtype: chr
+        :returns: -1 on channel failure, 0 if no digit is received in the
+            timeout, or the numerical value of the ASCII of the digit if one is
+            received. Use -1 for the timeout value if you desire the call to
+            block indefinitely.
+        """
+        res = self.execute('WAIT FOR DIGIT', timeout)['result'][0]
+        if res == '0':
+            return ''
+        else:
+            try:
+                return chr(int(res))
+            except ValueError:
+                raise AGIError('Unable to convert result to digit: %s' % res)
