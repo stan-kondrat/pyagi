@@ -642,6 +642,40 @@ class AGI(object):
         """
         self.execute('SET VARIABLE', self._quote(name), self._quote(value))
 
+    def speech_activate_grammar(self):
+        """Activates the specified grammar on the speech object."""
+        pass
+
+    def speech_create(self):
+        """Create a speech object to be used by the other Speech AGI
+        commands.
+        """
+        pass
+
+    def speech_deactivate_grammar(self):
+        """Deactivates the specified grammar on the speech object."""
+        pass
+
+    def speech_destroy(self):
+        """Destroy the speech object created by 'SPEECH CREATE'."""
+        pass
+
+    def speech_load_grammar(self):
+        """Loads the specified grammar as the specified name."""
+        pass
+
+    def speech_recognize(self):
+        """Plays back given prompt while listening for speech and dtmf."""
+        pass
+
+    def speech_set(self):
+        """Set an engine-specific setting."""
+        pass
+
+    def speech_unload_grammar(self):
+        """Unloads the specified grammar."""
+        pass
+
     def stream_file(self, filename, escape_digits='', sample_offset=0):
         """Send the given file, allowing playback to be interrupted by the
         given digits, if any.
