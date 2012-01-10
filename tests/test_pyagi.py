@@ -20,6 +20,9 @@ class TestAGI(TestCase):
         )
         self.agi = AGI()
 
+    def test_default_record_is_int(self):
+        self.assertIsInstance(self.agi.DEFAULT_RECORD, int)
+
     def test_default_timeout_is_int(self):
         self.assertIsInstance(self.agi.DEFAULT_TIMEOUT, int)
 
