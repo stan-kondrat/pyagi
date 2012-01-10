@@ -345,6 +345,12 @@ class AGI(object):
         res, value = result['result']
         return value
 
+    def gosub(self):
+        """Cause the channel to execute the specified dialplan subroutine,
+        returning to the dialplan with execution of a Return().
+        """
+        pass
+
     def hangup(self, channel=''):
         """Hangs up the specified channel. If no channel name is given, hangs
         up the current channel.
