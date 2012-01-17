@@ -40,5 +40,20 @@ class TestAGI(TestCase):
     def test_get_agi_env_sets_vars_from_asterisk(self):
         self.assertEquals(self.agi.env, {'agi_test': 'test', 'agi_test2': 'test'})
 
+    def test_quote_returns_str(self):
+        self.assertIsInstance(self.agi._quote('test'), str)
+
+    def test_quote_adds_initial_quote_char(self):
+        self.assertTrue(self.agi._quote('test').startswith('"'))
+
+    def test_quote_adds_quote_char_to_end(self):
+        self.assertTrue(self.agi._quote('test').endswith('"'))
+
+    def test_quote_returns_expected_value(self):
+        self.assertEquals(self.agi._quote('test'), '"test"')
+
+    def test_quote_accepts_ints(self):
+        self.assertEquals(self.agi._quote(1), '"1"')
+
     def tearDown(self):
         del self.agi
