@@ -24,6 +24,12 @@ class TestAGI(TestCase):
     def test_init_sets_sighup_signal(self):
         self.assertTrue(hasattr(getsignal(SIGHUP), '__call__'))
 
+    def test_init_sets_env(self):
+        self.assertTrue(hasattr(self.agi, 'env'))
+
+    def test_init_sets_env_dict(self):
+        self.assertEquals(type(self.agi.env), dict)
+
     def test_default_record_is_int(self):
         self.assertIsInstance(self.agi.DEFAULT_RECORD, int)
 
