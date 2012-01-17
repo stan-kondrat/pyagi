@@ -28,5 +28,19 @@ setup(
 	keywords = 'asterisk agi application gateway interface telephony voip',
 	description = 'An Asterisk AGI library for humans.',
 	long_description = open('README').read(),
+    classifiers = [
+        'Development Status :: 4 - Beta',
+        'Environment :: Other Environment',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Telecommunications Industry',
+        'License :: Public Domain',
+        'Natural Language :: English',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Communications :: Telephony',
+        'Topic :: Software Development :: Libraries :: Application Frameworks',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],
 
 )
