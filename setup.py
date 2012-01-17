@@ -18,7 +18,7 @@ setup(
 
 	# Package dependencies.
 	install_requires = [],
-	tests_require = ['nose>=1.1.2'],
+	tests_require = ['fudge>=1.0.3', 'nose>=1.1.2'],
 
 	# Metadata for PyPI.
 	author = 'Randall Degges',
