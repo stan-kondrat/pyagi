@@ -13,8 +13,6 @@ class TestAGI(TestCase):
     @patch('sys.stdin')
     def setUp(self, fake_stdin):
         (fake_stdin
-            .has_attr(DEFAULT_TIMEOUT=2000)
-            .has_attr(DEFAULT_RECORD=20000)
             .provides('readline').returns('agi_test: test\n')
             .next_call().returns('agi_test2: test\n')
             .next_call().returns('\n')
