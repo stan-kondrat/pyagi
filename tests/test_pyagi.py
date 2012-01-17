@@ -28,7 +28,7 @@ class TestAGI(TestCase):
         self.assertTrue(hasattr(self.agi, 'env'))
 
     def test_init_sets_env_dict(self):
-        self.assertEquals(type(self.agi.env), dict)
+        self.assertIsInstance(self.agi.env, dict)
 
     def test_default_record_is_int(self):
         self.assertIsInstance(self.agi.DEFAULT_RECORD, int)
