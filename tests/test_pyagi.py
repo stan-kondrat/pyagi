@@ -1,6 +1,7 @@
 """Tests for ``pyagi.pyagi``."""
 
 
+from signal import getsignal, SIGHUP
 from unittest import TestCase
 
 from fudge import patch
@@ -19,6 +20,9 @@ class TestAGI(TestCase):
             .next_call().returns('\n')
         )
         self.agi = AGI()
+
+    def test_init_sets_sighup_signal(self):
+        self.assertTrue(hasattr(getsignal(SIGHUP), '__call__'))
 
     def test_default_record_is_int(self):
         self.assertIsInstance(self.agi.DEFAULT_RECORD, int)
