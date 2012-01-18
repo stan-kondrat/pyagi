@@ -5,6 +5,7 @@ from signal import getsignal, SIGHUP
 from unittest import TestCase
 
 from fudge import patch
+from pyagi.exceptions import AGISIGHUPHangup
 from pyagi.pyagi import AGI
 
 
@@ -54,6 +55,9 @@ class TestAGI(TestCase):
 
     def test_quote_accepts_ints(self):
         self.assertEquals(self.agi._quote(1), '"1"')
+
+    def test_handle_sighup_raises_exception(self):
+        self.assertRaises(AGISIGHUPHangup, self.agi._handle_sighup, 1, 2)
 
     def tearDown(self):
         del self.agi
