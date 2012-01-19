@@ -10,7 +10,10 @@ from pyagi.pyagi import AGI
 
 
 class TestAGI(TestCase):
-
+    """Base test case for all AGI class tests. This class provides a simple
+    setUp method that mocks stdin. This reduces our code complexity across all
+    of our test cases.
+    """
     @patch('sys.stdin')
     def setUp(self, fake_stdin):
         (fake_stdin
@@ -20,6 +23,21 @@ class TestAGI(TestCase):
         )
         self.agi = AGI()
 
+    def tearDown(self):
+        del self.agi
+
+
+class TestAttributes(TestAGI):
+    """Tests all AGI class attributes."""
+    def test_default_record_is_int(self):
+        self.assertIsInstance(self.agi.DEFAULT_RECORD, int)
+
+    def test_default_timeout_is_int(self):
+        self.assertIsInstance(self.agi.DEFAULT_TIMEOUT, int)
+
+
+class TestInit(TestAGI):
+    """Tests the __init__ method."""
     def test_init_sets_sighup_signal(self):
         self.assertTrue(hasattr(getsignal(SIGHUP), '__call__'))
 
@@ -29,18 +47,18 @@ class TestAGI(TestCase):
     def test_init_sets_env_dict(self):
         self.assertIsInstance(self.agi.env, dict)
 
-    def test_default_record_is_int(self):
-        self.assertIsInstance(self.agi.DEFAULT_RECORD, int)
 
-    def test_default_timeout_is_int(self):
-        self.assertIsInstance(self.agi.DEFAULT_TIMEOUT, int)
-
+class TestGetAGIEnv(TestAGI):
+    """Tests the _get_agi_env method."""
     def test_get_agi_env_sets_env_attr(self):
         self.assertIsInstance(self.agi.env, dict)
 
     def test_get_agi_env_sets_vars_from_asterisk(self):
         self.assertEquals(self.agi.env, {'agi_test': 'test', 'agi_test2': 'test'})
 
+
+class TestQuote(TestAGI):
+    """Tests the _quote method."""
     def test_quote_returns_str(self):
         self.assertIsInstance(self.agi._quote('test'), str)
 
@@ -56,8 +74,8 @@ class TestAGI(TestCase):
     def test_quote_accepts_ints(self):
         self.assertEquals(self.agi._quote(1), '"1"')
 
+
+class TestHandleSighup(TestAGI):
+    """Tests the _handle_sighup method."""
     def test_handle_sighup_raises_exception(self):
         self.assertRaises(AGISIGHUPHangup, self.agi._handle_sighup, 1, 2)
-
-    def tearDown(self):
-        del self.agi
