@@ -4,7 +4,7 @@
 from signal import getsignal, SIGHUP
 from unittest import TestCase
 
-from fudge import patch
+from fudge import patch, test, Fake
 from pyagi.exceptions import AGISIGHUPHangup
 from pyagi.pyagi import AGI
 
@@ -79,3 +79,17 @@ class TestHandleSighup(TestAGI):
     """Tests the _handle_sighup method."""
     def test_handle_sighup_raises_exception(self):
         self.assertRaises(AGISIGHUPHangup, self.agi._handle_sighup, 1, 2)
+
+
+class TestExecute(TestAGI):
+    """Tests the execute method."""
+
+    @test
+    def test_execute_calls_command(self):
+        self.agi.send_command = (Fake('pyagi.pyagi.AGI.send_command')
+                .is_callable())
+        self.agi.get_result = (Fake('pyagi.pyagi.AGI.get_result')
+                .is_callable()
+                .returns(True))
+
+        self.agi.execute('NoOp')
